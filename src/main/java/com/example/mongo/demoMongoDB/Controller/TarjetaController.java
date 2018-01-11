@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -19,11 +20,11 @@ public class TarjetaController {
     TarjetaService tarjetaService;
 
     @GetMapping("/tarjetas/{id}")
-    public Tarjeta getTarjeta(@PathVariable("id") String idTablero) throws Exception {
+    public Flux<Tarjeta> getTarjeta(@PathVariable("id") String idTablero) throws Exception {
 
-        CompletableFuture<Tarjeta> tarjeta = tarjetaService.findTarjetas(idTablero);
-        Tarjeta tarjetas = tarjeta.get();
-        return  tarjetas;
+        Flux<Tarjeta> tarjeta = tarjetaService.findTarjetas(idTablero);
+
+        return  tarjeta;
     }
 
 
